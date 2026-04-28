@@ -2,6 +2,14 @@
   "name": "@flow-js/tridot",
   "version": "1.1.0",
   "description": "Collection of tools to interact with Tridot",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/florianpasteur/tridot.git"
+  },
+  "homepage": "https://github.com/florianpasteur/tridot#readme",
+  "bugs": {
+    "url": "https://github.com/florianpasteur/tridot/issues"
+  },
   "type": "module",
   "main": "src/index.js",
   "publishConfig": {
