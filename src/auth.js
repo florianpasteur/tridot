@@ -1,13 +1,24 @@
 import { request } from './http.js';
 
 /**
+ * Profile returned by the Tridot login endpoint.
+ *
+ * @typedef {object} AthleteProfile
+ * @property {string} authToken - bearer token to pass to {@link import('./client.js').createClient}
+ * @property {number|string} [athleteId] - athlete (member) id
+ * @property {string} [email]
+ * @property {string} [firstName]
+ * @property {string} [lastName]
+ */
+
+/**
  * Logs in against the Tridot API and returns the response body
  * (containing at least `authToken`, plus the athlete profile).
  *
  * @param {string} email - the account email
  * @param {string} password - the account password
- * @param {object} [options] - forwarded to `request` (e.g. `fetchImpl`, `baseUrl`)
- * @returns {Promise<object>} the `body.response` payload from the login endpoint
+ * @param {import('./http.js').RequestOptions} [options] - forwarded to `request` (e.g. `fetchImpl`, `baseUrl`)
+ * @returns {Promise<AthleteProfile>} the `body.response` payload from the login endpoint
  */
 export async function login(email, password, options = {}) {
     if (!email || !password) {

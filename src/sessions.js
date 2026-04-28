@@ -1,5 +1,22 @@
 import { request } from './http.js';
 
+/** @typedef {import('./client.js').ClientConfig} ClientConfig */
+
+/**
+ * Geographic location attached to a pushed workout.
+ *
+ * @typedef {object} Location
+ * @property {number} latitude
+ * @property {number} longitude
+ * @property {string} name - human-readable label, e.g. `"HOME"`
+ */
+
+/**
+ * Build a `pushWorkout(sessionId, vendorName, location)` function bound to the given client config.
+ *
+ * @param {ClientConfig} config
+ * @returns {(sessionId: string|number, vendorName: string, location: Location) => Promise<void>} pushes a session to a connected third-party vendor (e.g. `"GARMIN"`)
+ */
 export function pushWorkout(config) {
     return async function pushWorkoutFn(sessionId, vendorName, location) {
         if (!sessionId || !vendorName) {
