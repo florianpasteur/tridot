@@ -1,11 +1,8 @@
 export const DEFAULT_BASE_URL = 'https://api.tridot.com';
 export const DEFAULT_REFERRER = 'https://app.tridot.com/';
-export const DEFAULT_USER_AGENT =
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0';
 
 export function buildHeaders(token, extra = {}) {
     return {
-        'User-Agent': DEFAULT_USER_AGENT,
         'Accept': 'application/json, text/plain, */*',
         'Accept-Language': 'en-US,en;q=0.9',
         'Content-Type': 'application/json',
