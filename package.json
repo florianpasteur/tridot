@@ -4,6 +4,10 @@
   "description": "Collection of tools to interact with Tridot",
   "type": "module",
   "main": "src/index.js",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "exports": {
     ".": "./src/index.js"
   },
