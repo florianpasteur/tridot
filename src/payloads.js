@@ -1,0 +1,73 @@
+export const ZONE_TYPES = ['z1', 'z2', 'z3', 'z4', 'z5', 'z6'];
+
+export function emptyZone(zoneType) {
+    return {
+        zoneType,
+        zoneLabel: '',
+        planned: '',
+        actual: '',
+        percentage: '',
+        pace: '',
+        rpe: '',
+        power: '',
+        hr: '',
+    };
+}
+
+export function buildSessionPayload({
+    token,
+    athleteId,
+    phaseId,
+    name,
+    date,
+    time,
+    durationSeconds = 3600,
+    sessionType = 'strength',
+    sessionZoneLabel = 'STRENGTH Session',
+    location = 'Home',
+    image = 'images/strength-new.png',
+    sessionDetail = { warmUp: 'Warm up', mainSet: 'Main set', coolDown: 'Cool down' },
+    overrides = {},
+}) {
+    return {
+        header: { accessToken: token },
+        body: {
+            athleteId,
+            sessionId: 123,
+            sessionType,
+            date,
+            dayName: null,
+            phaseId,
+            sessionName: name,
+            sessionTime: time,
+            sessionZoneLabel,
+            plannedTotal: durationSeconds,
+            actualTotal: '',
+            location,
+            image,
+            isLinkedFile: false,
+            isSystemGenerated: false,
+            isCoachCreated: false,
+            isCoachAdjusted: '',
+            isAthleteCreated: true,
+            indoor: null,
+            msCompletion: null,
+            wuCompletion: null,
+            sessionLevel: '',
+            isMovedToDifferentWeek: false,
+            isFromDifferentWeek: false,
+            linkedFiles: [],
+            zones: ZONE_TYPES.map(emptyZone),
+            achievement: null,
+            sessionVideos: null,
+            interference: [0],
+            sessionDetail,
+            myNotes: [],
+            sessionNotes: [],
+            sessionChats: [],
+            warmUpDuration: null,
+            addlData: {},
+            ...overrides,
+        },
+    };
+}
