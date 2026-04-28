@@ -59,10 +59,9 @@ export function emptyZone(zoneType) {
  * Build the full payload sent to the schedule-add endpoint.
  *
  * @param {BuildSessionPayloadArgs} args
- * @returns {{ header: { accessToken: string }, body: Record<string, unknown> }}
+ * @returns {Record<string, unknown> }
  */
 export function buildSessionPayload({
-    token,
     athleteId,
     phaseId,
     name,
@@ -77,8 +76,6 @@ export function buildSessionPayload({
     overrides = {},
 }) {
     return {
-        header: { accessToken: token },
-        body: {
             athleteId,
             sessionId: 123,
             sessionType,
@@ -115,6 +112,5 @@ export function buildSessionPayload({
             warmUpDuration: null,
             addlData: {},
             ...overrides,
-        },
     };
 }

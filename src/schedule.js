@@ -68,7 +68,6 @@ export function createSession(config) {
         }
 
         const payload = buildSessionPayload({
-            token: config.token,
             athleteId: config.athleteId,
             phaseId: session.phaseId,
             name: session.name,
