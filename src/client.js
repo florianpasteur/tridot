@@ -1,5 +1,5 @@
 import { dayDetails, createSession, updateSessionTime } from './schedule.js';
-import { pushWorkout } from './sessions.js';
+import { exportWorkout, pushWorkout } from './sessions.js';
 
 /**
  * Shared configuration passed to every endpoint helper.
@@ -26,10 +26,11 @@ import { pushWorkout } from './sessions.js';
  *
  * @typedef {object} TridotClient
  * @property {ClientConfig} config - the resolved config used by every method
- * @property {(date: string) => Promise<any>} dayDetails - fetch the schedule for a single day (`MM/DD/YYYY`)
+ * @property {(date: string) => Promise<any>} dayDetails - fetch the schedule for a single day (`YYYY-MM-DD`)
  * @property {(session: import('./schedule.js').Session) => Promise<any>} createSession - create a session on the calendar
  * @property {(sessionId: string|number, time: string) => Promise<void>} updateSessionTime - update the start time of a session
  * @property {(sessionId: string|number, vendorName: string, location: import('./sessions.js').Location) => Promise<void>} pushWorkout - push a session to a connected vendor
+ * @property {(sessionId: string|number, options?: import('./sessions.js').WorkoutExportOptions) => Promise<import('./sessions.js').BinaryResponse>} exportWorkout - download an exported workout file (e.g. FIT)
  */
 
 /**
@@ -56,5 +57,6 @@ export function createClient({
         createSession: createSession(config),
         updateSessionTime: updateSessionTime(config),
         pushWorkout: pushWorkout(config),
+        exportWorkout: exportWorkout(config),
     };
 }

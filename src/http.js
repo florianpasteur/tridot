@@ -106,6 +106,60 @@ export async function request(path, {
     return parsed;
 }
 
+/**
+ * Same transport as {@link request}, but reads the response as binary data.
+ * Use for endpoints that return files (e.g. FIT export).
+ *
+ * @param {string} path
+ * @param {RequestOptions} [options]
+ * @returns {Promise<{ arrayBuffer: ArrayBuffer, contentType: string, contentDisposition: string | null }>}
+ */
+export async function requestBinary(path, options = {}) {
+    const {
+        method = 'GET',
+        token,
+        body,
+        headers,
+        baseUrl = DEFAULT_BASE_URL,
+        referrer = DEFAULT_REFERRER,
+        fetchImpl,
+    } = options;
+
+    const fetchFn = fetchImpl || (typeof fetch === 'function' ? fetch : null);
+    if (!fetchFn) {
+        throw new Error(
+            'No fetch implementation available. Pass `fetchImpl` or run on a platform with global fetch (Node 18+).'
+        );
+    }
+
+    const init = {
+        method,
+        credentials: 'include',
+        mode: 'cors',
+        referrer,
+        headers: buildHeaders(token, headers),
+    };
+
+    if (body !== undefined && body !== null) {
+        init.body = typeof body === 'string' ? body : JSON.stringify(body);
+    }
+
+    const response = await fetchFn(`${baseUrl}${path}`, init);
+
+    if (!response.ok) {
+        const text = await response.text();
+        const parsed = text ? safeJsonParse(text) : null;
+        throw new TridotHttpError(response, parsed ?? text);
+    }
+
+    const arrayBuffer = await response.arrayBuffer();
+    return {
+        arrayBuffer,
+        contentType: response.headers.get('content-type') ?? '',
+        contentDisposition: response.headers.get('content-disposition'),
+    };
+}
+
 function safeJsonParse(text) {
     try {
         return JSON.parse(text);
