@@ -6,12 +6,12 @@ import { request, requestBinary } from './http.js';
  * Options for POST `/sessions/:id/workout/export` (mirrors the web app export dialog).
  *
  * @typedef {object} WorkoutExportOptions
- * @property {'FIT'|'MRC'|'ZWO'|'ERG'} [prefExportFileType] - defaults to `"FIT"`
- * @property {number} [defaultPrependWUTime] - seconds prepended to warm-up (default `0`)
- * @property {number} [defaultAppendMSTime] - seconds appended to main set (default `0`)
- * @property {number} [defaultWUMSInsertTime] - seconds inserted between warm-up and main set (default `0`)
+ * @property {'FIT'|'MRC'|'ZWO'|'ERG'} [fileType] - defaults to `"FIT"`
+ * @property {number} [extraTimeBeforeWarmUp] - seconds prepended to warm-up (default `0`)
+ * @property {number} [extraTimeBeforeMainSet] - seconds appended to main set (default `0`)
+ * @property {number} [extraTimeAfterMainSet] - seconds inserted between warm-up and main set (default `0`)
  * @property {boolean} [exportHrForLowIntensity] - default `true`
- * @property {'POWER'|'HR'|'PACE'} [prefIntensityMetric] - default `"PACE"`
+ * @property {'POWER'|'HR'|'PACE'} [metric] - default `"PACE"`
  */
 
 /**
@@ -69,12 +69,12 @@ export function exportWorkout(config) {
         }
 
         const body = {
-            prefExportFileType: options.prefExportFileType ?? 'FIT',
-            defaultPrependWUTime: options.defaultPrependWUTime ?? 0,
-            defaultAppendMSTime: options.defaultAppendMSTime ?? 0,
-            defaultWUMSInsertTime: options.defaultWUMSInsertTime ?? 0,
+            prefExportFileType: options.fileType ?? 'FIT',
+            defaultPrependWUTime: options.extraTimeBeforeWarmUp ?? 0,
+            defaultAppendMSTime: options.extraTimeBeforeMainSet ?? 0,
+            defaultWUMSInsertTime: options.extraTimeAfterMainSet ?? 0,
             exportHrForLowIntensity: options.exportHrForLowIntensity ?? true,
-            prefIntensityMetric: options.prefIntensityMetric ?? 'PACE',
+            prefIntensityMetric: options.metric ?? 'PACE',
         };
 
         return requestBinary(

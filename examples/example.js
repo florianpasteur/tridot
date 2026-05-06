@@ -1,4 +1,4 @@
-import { createClient, login } from '../src/index.js';
+import {createClient, login} from '../src/index.js';
 
 async function main() {
     const profile = await login(process.env.TRIDOT_EMAIL, process.env.TRIDOT_PASSWORD);
@@ -21,22 +21,17 @@ async function main() {
         const dateStr = `${yyyy}-${mm}-${dd}`;
         try {
             const day = await tridot.dayDetails(dateStr);
-            const sessions = sessionsFromDay(day);
 
-            if (sessions.length === 0) {
-                console.log(`${dateStr}: no sessions (inspect dayDetails shape if unexpected)`);
-                continue;
+            for (const session of day.sessions || []) {
+                const workoutBin = await tridot.exportWorkout(session.sessionId, {
+                    fileType: 'FIT',
+                    metric: 'PACE',
+                });
+
+                console.log(workoutBin);
+
+
             }
-
-            for (const session of sessions) {
-                const sessionId = sessionIdOf(session);
-                if (sessionId == null) {
-                    console.warn(`${dateStr}: skip entry without sessionId`, session);
-                    continue;
-                }
-
-        let dayDetails = await tridot.dayDetails(dateStr);
-        console.log(dayDetails);
         } catch (e) {
             console.error(e);
         }
