@@ -6,6 +6,10 @@ An unofficial JavaScript client for the [Tridot](https://app.tridot.com/) athlet
 > This is not affiliated with or endorsed by Tridot. The library calls the
 > same endpoints used by the Tridot web app and may break at any time.
 
+For a runnable end-to-end example (login, walk two weeks of training, and
+export each session as a `.fit` file plus its raw JSON), see
+[`examples/example.js`](./examples/example.js).
+
 ## Install
 
 ```bash
@@ -111,6 +115,33 @@ await tridot.pushWorkout(created.sessionId, 'GARMIN', {
 ```
 
 `location` is required and must be `{ latitude, longitude, name }`.
+
+#### `client.exportWorkout(sessionId, options?)`
+
+Downloads an exported workout file for a session (the same export the
+Tridot web app produces). Resolves to a `BinaryResponse`:
+
+```js
+const workout = await tridot.exportWorkout(session.sessionId, {
+  fileType: 'FIT',   // 'FIT' | 'MRC' | 'ZWO' | 'ERG', default 'FIT'
+  metric: 'PACE',    // 'POWER' | 'HR' | 'PACE',       default 'PACE'
+});
+
+await writeFile('workout.fit', Buffer.from(workout.arrayBuffer));
+```
+
+`options` (all optional):
+
+| Field                     | Default  | Description                                      |
+| ------------------------- | -------- | ------------------------------------------------ |
+| `fileType`                | `'FIT'`  | One of `'FIT'`, `'MRC'`, `'ZWO'`, `'ERG'`        |
+| `metric`                  | `'PACE'` | Intensity metric: `'POWER'`, `'HR'`, `'PACE'`    |
+| `extraTimeBeforeWarmUp`   | `0`      | Seconds prepended to the warm-up                 |
+| `extraTimeBeforeMainSet`  | `0`      | Seconds inserted between warm-up and main set    |
+| `extraTimeAfterMainSet`   | `0`      | Seconds appended to the main set                 |
+| `exportHrForLowIntensity` | `true`   | Include HR targets for low-intensity intervals   |
+
+The returned object is `{ arrayBuffer, contentType, contentDisposition }`.
 
 ## Lower-level building blocks
 
