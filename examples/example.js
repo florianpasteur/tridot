@@ -22,7 +22,7 @@ async function main() {
     for (let i = 0; i < 14; i++) {
         const dayOfTheWeek = weekDay(i);
         const dateStr = yyyyMMdd(dayOfTheWeek);
-        const currentWeekNumber = weekNumber(dayOfTheWeek);
+        const currentWeekNumber = `w${weekNumber(dayOfTheWeek)}`;
 
         try {
             const trainingDay = await tridot.dayDetails(dateStr);
