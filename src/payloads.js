@@ -44,7 +44,7 @@ export function emptyZone(zoneType) {
  * @property {number|string} athleteId - athlete (member) id
  * @property {number|string} phaseId - current training phase id
  * @property {string} name - session display name
- * @property {string} date - session date in `MM/DD/YYYY` format
+ * @property {string} date - session date in `YYYY-MM-DD` format
  * @property {string} time - session start time, e.g. `"6:00 AM"`
  * @property {number} [durationSeconds] - planned duration in seconds (default `3600`)
  * @property {string} [sessionType] - default `"strength"`

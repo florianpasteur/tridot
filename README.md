@@ -30,7 +30,7 @@ const tridot = createClient({
   athleteId: profile.athleteId,
 });
 
-const day = await tridot.dayDetails('04/28/2026');
+const day = await tridot.dayDetails('2026-07-30');
 console.log(day);
 ```
 
@@ -64,10 +64,10 @@ The returned client exposes:
 
 #### `client.dayDetails(date)`
 
-Fetches the schedule for a single day. `date` is `MM/DD/YYYY`.
+Fetches the schedule for a single day. `date` is `YYYY-MM-DD`.
 
 ```js
-const day = await tridot.dayDetails('04/28/2026');
+const day = await tridot.dayDetails('2026-07-30');
 ```
 
 #### `client.createSession(session)`

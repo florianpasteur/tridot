@@ -17,7 +17,7 @@ import { buildSessionPayload } from './payloads.js';
  *
  * @typedef {object} Session
  * @property {string} name - session display name
- * @property {string} date - session date in `MM/DD/YYYY` format
+ * @property {string} date - session date in `YYYY-MM-DD` format
  * @property {string} time - session start time, e.g. `"6:00 AM"`
  * @property {number|string} phaseId - current training phase id
  * @property {number} [durationSeconds] - planned duration in seconds (default `3600`)
@@ -33,7 +33,7 @@ import { buildSessionPayload } from './payloads.js';
  * Build a `dayDetails(date)` function bound to the given client config.
  *
  * @param {ClientConfig} config
- * @returns {(date: string) => Promise<any>} fetches the schedule for a single day (`MM/DD/YYYY`)
+ * @returns {(date: string) => Promise<any>} fetches the schedule for a single day (`YYYY-MM-DD`)
  */
 export function dayDetails(config) {
     return async function getDayDetails(date) {
